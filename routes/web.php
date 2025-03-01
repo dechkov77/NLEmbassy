@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\InterestController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -32,5 +35,26 @@ Route::post('admin/modules/store', [ModuleController::class, 'store'])->name('mo
 Route::get('admin/modules/edit/{id}', [ModuleController::class, 'edit'])->name('modules.edit');
 Route::put('admin/modules/update/{id}', [ModuleController::class, 'update'])->name('modules.update');
 Route::delete('admin/modules/destroy/{id}', [ModuleController::class, 'destroy'])->name('modules.destroy');
+
+Route::get('admin/lessons/index', [LessonController::class, 'index'])->name('lessons.index');
+Route::get('admin/lessons/create', [LessonController::class, 'create'])->name('lessons.create');
+Route::post('admin/lessons/store', [LessonController::class, 'store'])->name('lessons.store');
+Route::get('admin/lessons/edit/{id}', [LessonController::class, 'edit'])->name('lessons.edit');
+Route::put('admin/lessons/update/{id}', [LessonController::class, 'update'])->name('lessons.update');
+Route::delete('admin/lessons/destroy/{id}', [LessonController::class, 'destroy'])->name('lessons.destroy');
+
+Route::get('admin/achievements/index', [AchievementController::class, 'index'])->name('achievements.index');
+Route::get('admin/achievements/create', [AchievementController::class, 'create'])->name('achievements.create');
+Route::post('admin/achievements/store', [AchievementController::class, 'store'])->name('achievements.store');
+Route::get('admin/achievements/edit/{id}', [AchievementController::class, 'edit'])->name('achievements.edit');
+Route::put('admin/achievements/update/{id}', [AchievementController::class, 'update'])->name('achievements.update');
+Route::delete('admin/achievements/destroy/{id}', [AchievementController::class, 'destroy'])->name('achievements.destroy');
+
+Route::get('admin/interests/index', [InterestController::class, 'index'])->name('interests.index');
+Route::get('admin/interests/create', [InterestController::class, 'create'])->name('interests.create');
+Route::post('admin/interests/store', [InterestController::class, 'store'])->name('interests.store');
+Route::get('admin/interests/edit/{id}', [InterestController::class, 'edit'])->name('interests.edit');
+Route::put('admin/interests/update/{id}', [InterestController::class, 'update'])->name('interests.update');
+Route::delete('admin/interests/destroy/{id}', [InterestController::class, 'destroy'])->name('interests.destroy');
 
 require __DIR__.'/auth.php';

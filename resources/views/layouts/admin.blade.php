@@ -41,8 +41,8 @@
         <h2>Admin Panel</h2>
         <a href="{{ route('courses.index') }}">Courses</a>
         <a href="{{ route('modules.index') }}">Modules</a>
-        <a href="#">Users</a>
-        <a href="#">Settings</a>
+        <a href="{{ route('lessons.index') }}">Lessons</a>
+        <a href="{{ route('achievements.index') }}">Achievements</a>
         <a href="#">Logout</a>
     </div>
 
