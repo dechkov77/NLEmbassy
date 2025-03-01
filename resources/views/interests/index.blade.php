@@ -14,7 +14,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Actions</th>
@@ -23,7 +22,6 @@
             <tbody>
                 @foreach($interests as $interest)
                     <tr>
-                        <td>{{ $interest->id }}</td>
                         <td>{{ $interest->name }}</td>
                         <td>{{ $interest->description }}</td>
                         <td>

@@ -43,6 +43,7 @@
         <a href="{{ route('modules.index') }}">Modules</a>
         <a href="{{ route('lessons.index') }}">Lessons</a>
         <a href="{{ route('achievements.index') }}">Achievements</a>
+        <a href="{{ route('interests.index') }}">Interests</a>
         <a href="#">Logout</a>
     </div>
 
