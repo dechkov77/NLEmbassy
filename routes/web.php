@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -56,5 +58,11 @@ Route::post('admin/interests/store', [InterestController::class, 'store'])->name
 Route::get('admin/interests/edit/{id}', [InterestController::class, 'edit'])->name('interests.edit');
 Route::put('admin/interests/update/{id}', [InterestController::class, 'update'])->name('interests.update');
 Route::delete('admin/interests/destroy/{id}', [InterestController::class, 'destroy'])->name('interests.destroy');
+
+Route::get('/test', function() {
+    $user = User::find(2);
+
+    dd($user->courses);
+});
 
 require __DIR__.'/auth.php';

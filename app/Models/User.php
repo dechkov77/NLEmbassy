@@ -54,30 +54,30 @@ class User extends Authenticatable
     }
 
     public function courses(){
-        return $this->hasMany(Course::class);
+        return $this->belongsToMany(Course::class, 'user_courses');
     }
 
     public function studentData(){
-        return $this->belongsTo(StudentData::class);
+        return $this->hasOne(StudentData::class, 'user_id');
     }
 
     public function professorData(){
-        return $this->belongsTo(ProfessorData::class);
+        return $this->hasOne(ProfessorData::class, 'user_id');
     }
 
     public function achievements(){
-        return $this->hasMany(Achievement::class);
+        return $this->belongsToMany(Achievement::class, 'user_achievements', 'user_id', 'achievement_id');
     }
 
     public function interests(){
-        return $this->hasMany(Interest::class);
+        return $this->belongsToMany(Interest::class, 'student_interests', 'user_id', 'interest_id');
     }
 
     public function newsLetter(){
         return $this->belongsTo(Newsletter::class);
     }
 
-    public function progess(){
+    public function progress(){
         return $this->hasMany(UserProgress::class);
     }
 

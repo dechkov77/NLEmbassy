@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Achievement;
 use App\Models\Course;
+use App\Models\Interest;
 use App\Models\Lesson;
+use App\Models\User;
 use App\Models\UserProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
-        public function landingCourses() {
+
+    public function landingCourses() {
         $courses = Course::with(['category','professors' => function ($query) {
             $query->where('role_id', 3);
         }])->get();
@@ -100,6 +104,71 @@ class ApiController extends Controller
             'course_category' => $course_category,
             'number_of_modules' => $number_of_modules,
             'number_of_lectures' => $number_of_lectures
+        ]);
+    }
+
+    public function userProfile() {
+        $logged_in_user = Auth::user();
+        $user = User::with('courses', 'studentData', 'interests', 'progress', 'achievements')->find(2);
+        $number_user_courses = $user->courses->count();
+        $number_user_achievements = $user->achievements->count();
+        
+        $all_courses_count = Course::count();
+        $all_achievements_count = Achievement::count();
+
+        $percentage_user_courses = $number_user_courses/$all_courses_count;
+        $percentage_user_achievements = $number_user_achievements/$all_achievements_count;
+        $random_courses = Course::with('category')->inRandomOrder()->limit(3)->get();
+
+        return response()->json([
+            'user' => $user,
+            'percentage_user_courses' => $percentage_user_courses,
+            'percentage_user_achievements' => $percentage_user_achievements,
+            'recommended_courses' => $random_courses
+        ]);
+    }
+
+    public function coursesBoard() {
+        $courses = Course::with('categories')->get();
+
+        return response()->json($courses);
+    }
+
+    public function allInterests() {
+        $interests = Interest::all();
+
+        return response()->json($interests);
+    }
+
+    public function studentOnboarding(Request $request) {
+        $user = Auth::user();
+        $user->interests->attach($request->interests);
+
+        return response()->json(['message' => 'Student onboarding complete!']);
+    }
+
+    public function professorDashboard() {
+        $user = Auth::user();
+        $professorId = $user->id;
+        $professor_data = User::with('professorData', 'courses')->find($user->id);
+
+        $num_of_students = User::whereHas('progress', function ($query) use ($professorId) {
+            $query->whereHas('lesson.module.course.professors', function ($q) use ($professorId) {
+                $q->where('users.id', $professorId);
+            });
+        })->where('role_id', 2) // Ensure they are students
+        ->distinct()
+        ->count();
+
+        
+        $num_of_lessons =  Lesson::whereHas('module.course.professors', function ($query) use ($professorId) {
+                $query->where('users.id', $professorId);
+            })->count();
+
+        return response()->json([
+            'professor_data' => $professor_data,
+            'num_students' => $num_of_students,
+            'num_of_lessons' => $num_of_lessons
         ]);
     }
 }
