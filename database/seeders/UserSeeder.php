@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
                 'email' => 'admin@example.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password123'),
-                'role_id' => 1, // Assuming an admin role exists with ID 1
+                'role_id' => 3, // Assuming an admin role exists with ID 1
                 'profile_picture' => 'default.png',
                 'remember_token' => Str::random(10),
                 'created_at' => now(),

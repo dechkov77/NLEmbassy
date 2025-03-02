@@ -10,7 +10,7 @@ class UserCourseSeeder extends Seeder
     {
         DB::table('user_courses')->insert([
             [
-                'user_id' => 1, // Example user_id
+                'user_id' => 2, // Example user_id
                 'course_id' => 1, // Example course_id
                 'created_at' => now(),
                 'updated_at' => now(),
