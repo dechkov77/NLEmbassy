@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
-    public function landingCourses() {
-        $courses = Course::with(['professors' => function ($query) {
+        public function landingCourses() {
+        $courses = Course::with(['category','professors' => function ($query) {
             $query->where('role_id', 3);
         }])->get();
 
@@ -37,8 +37,8 @@ class ApiController extends Controller
             $query->where('course_id', $request->id);
         })->count();
 
-        
-        
+
+
         $completedLessons = DB::table('user_progress')
         ->join('lessons', 'user_progress.lesson_id', '=', 'lessons.id')
         ->join('modules', 'lessons.module_id', '=', 'modules.id')
@@ -64,7 +64,7 @@ class ApiController extends Controller
         ]);
 
         $progress->completed = !$progress->completed;
-        $progress->save();    
+        $progress->save();
 
         return response()->json([
             'message' => 'Lesson progress updated successfully',
@@ -81,7 +81,7 @@ class ApiController extends Controller
                 $query->where('role_id', 2);
             }
         ])->find($course_id);
-        
+
 
         $course_category = $course->category->name;
 

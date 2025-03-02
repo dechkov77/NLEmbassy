@@ -21,7 +21,6 @@ class AuthController extends Controller
         }
 
         $user = User::firstWhere('email', $request->only('email'));
-
         return $this->ok(
             'Authenticated',
             [
@@ -29,9 +28,16 @@ class AuthController extends Controller
                     $request->email,
                     ['*'],
                     now()->addMonth()
-                )->plainTextToken
+                )->plainTextToken,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'profile_picture' => $user->profile_picture, // If available
+                ],
             ]
         );
+        return $user;
     }
 
     public function register(RegisterUserRequest $request)
