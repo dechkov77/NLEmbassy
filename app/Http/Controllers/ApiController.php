@@ -170,4 +170,18 @@ class ApiController extends Controller
             'num_of_lessons' => $num_of_lessons
         ]);
     }
+
+    public function isProfessor() {
+        $user = Auth::user();
+
+        // if (!$user) {
+        //     return response()->json(['error' => 'User not authenticated'], 401);
+        // }
+
+        if($user->role->role == 'user') {
+            return response()->json(['is_professor' => True]);
+        } else if ($user->role->role == 'professor') {
+            return response()->json(['is_professor' => False]);
+        }
+    }
 }
