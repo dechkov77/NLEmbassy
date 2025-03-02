@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::get('/courses', [ApiController::class, 'landingCourses'])->name("landing.courses");
 
 
 Route::middleware('auth:sanctum')->group( function () {
