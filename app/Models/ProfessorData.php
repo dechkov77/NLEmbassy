@@ -9,8 +9,7 @@ class ProfessorData extends Model
     protected $fillable = ['position', 'company', 'gender', 'birth_date', 'work_experience_years', 'user_id'];
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class, 'user_id');
     }
-    
 
 }
